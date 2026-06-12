@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoadSmp | Offizielle Webseite</title>
+    <title>LoadSmp | Kompetitives PvP Netzwerk</title>
     <style>
-        /* MODERN DESIGN & RESET */
+        /* MODERN DESIGN RESET & FONTS */
         * {
             margin: 0;
             padding: 0;
@@ -14,102 +14,140 @@
         }
 
         body {
-            background-color: #0d0e12;
+            background-color: #0b0c10;
             color: #f1f3f9;
-            padding: 0;
-            margin: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
         }
 
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            padding: 20px;
-        }
-
-        /* ULTRA MODERNE NAVIGATION */
-        nav {
-            background: rgba(20, 22, 28, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            width: 100%;
-            position: sticky;
+        /* HINTERGRUND-BILD (Wie bei EnderCity) */
+        .background-overlay {
+            position: fixed;
             top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(15, 12, 24, 0.75) 0%, rgba(11, 12, 16, 0.95) 100%), 
+                        url('https://images.unsplash.com/photo-1627856013091-fed6e4e30025?q=80&w=1920') center/cover no-repeat;
+            z-index: -1;
+        }
+
+        /* NAVIGATION BAR */
+        nav {
+            background: rgba(11, 12, 16, 0.6);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
             z-index: 100;
-            display: flex;
-            justify-content: center;
         }
 
         .nav-container {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 15px 30px;
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
-            letter-spacing: 1px;
-            background: linear-gradient(45deg, #00ff87, #60efff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: #a855f7; /* Lila Akzent */
         }
 
         .nav-links {
             display: flex;
-            gap: 15px;
+            gap: 8px;
         }
 
         .nav-btn {
             background: none;
             border: none;
-            color: #a0a5b5;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 10px 20px;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            border-radius: 6px;
+            transition: all 0.2s ease;
         }
 
         .nav-btn:hover {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.03);
         }
 
         .nav-btn.active {
-            color: #00ff87;
-            background: rgba(0, 255, 135, 0.1);
-            border: 1px solid rgba(0, 255, 135, 0.2);
+            color: #ffffff;
+            border-bottom: 2px solid #a855f7;
+            border-radius: 0;
+            padding-bottom: 6px;
         }
 
-        .discord-main-btn {
-            background: #5865F2;
+        /* RECHTE NAV BUTTONS */
+        .nav-right {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 8px 18px;
+            border-radius: 6px;
             font-weight: 600;
             font-size: 14px;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .discord-main-btn:hover {
-            background: #4752C4;
-            transform: translateY(-2px);
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        /* SEITEN-SYSTEM (Standardmäßig versteckt) */
+        .btn-primary {
+            background: #a855f7;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: #9333ea;
+        }
+
+        /* INHALTS-CONTAINER */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px 40px 20px;
+        }
+
         .page {
             display: none;
+            width: 100%;
+            max-width: 1100px;
             animation: fadeIn 0.4s ease forwards;
-            margin-top: 20px;
         }
 
         .page.active {
@@ -117,64 +155,82 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 1. HOME PAGE STYLE --- */
-        .hero {
-            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(20,22,28,0.9) 100%), url('https://images.unsplash.com/photo-1627856013091-fed6e4e30025?q=80&w=1200') center/cover;
-            border-radius: 16px;
-            padding: 60px 40px;
+        /* --- 1. ENDERCITY STYLE HERO (HOME) --- */
+        .hero-section {
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            padding: 60px 10px;
         }
 
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 900;
-            margin-bottom: 15px;
+        .hero-section h1 {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 20px;
             letter-spacing: -1px;
         }
 
-        .hero p {
-            color: #a0a5b5;
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto 30px auto;
+        .hero-section h1 span {
+            color: #a855f7;
+        }
+
+        .hero-section p {
+            color: #cbd5e1;
+            font-size: 20px;
+            max-width: 750px;
+            margin: 0 auto 40px auto;
             line-height: 1.6;
         }
 
-        .cta-buttons {
+        .hero-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
-            flex-wrap: wrap;
         }
 
-        .ip-box {
-            background: linear-gradient(135deg, #00ff87 0%, #00b359 100%);
-            color: #000;
-            padding: 14px 28px;
+        .btn-discord-large {
+            background: #a855f7;
+            color: white;
+            padding: 14px 32px;
             border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 16px;
-            box-shadow: 0 8px 20px rgba(0, 255, 135, 0.2);
-            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s, background 0.2s;
         }
 
-        .ip-box:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px rgba(0, 255, 135, 0.3);
+        .btn-discord-large:hover {
+            background: #9333ea;
+            transform: translateY(-2px);
         }
 
-        /* --- 2. SHOP PAGE STYLE --- */
-        .sale-banner {
-            background: rgba(255, 71, 87, 0.1);
-            border: 1px solid rgba(255, 71, 87, 0.2);
+        .btn-outline-large {
+            background: rgba(11, 12, 16, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline-large:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: white;
+            transform: translateY(-2px);
+        }
+
+        /* --- 2. MODERN SHOP PAGE --- */
+        .shop-header {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
             border-radius: 12px;
             padding: 20px;
             display: flex;
@@ -183,43 +239,33 @@
             margin-bottom: 30px;
         }
 
-        .sale-tag {
-            background: #ff4757;
-            color: white;
-            font-weight: 800;
-            padding: 8px 16px;
-            border-radius: 6px;
-            animation: pulse 1.5s infinite;
-        }
-
         .shop-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
 
         .shop-card {
-            background: #14161c;
+            background: rgba(20, 21, 28, 0.6);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 30px 20px;
             text-align: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: white;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: all 0.2s;
         }
 
         .shop-card:hover {
-            transform: translateY(-5px);
-            border-color: #00ff87;
-            box-shadow: 0 10px 25px rgba(0, 255, 135, 0.1);
+            border-color: #a855f7;
+            transform: translateY(-4px);
+            background: rgba(20, 21, 28, 0.8);
         }
 
-        .card-icon {
-            font-size: 45px;
+        .shop-icon {
+            font-size: 40px;
             margin-bottom: 15px;
         }
 
@@ -229,203 +275,195 @@
         }
 
         .shop-card p {
-            color: #a0a5b5;
+            color: #94a3b8;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.5;
         }
 
-        .buy-btn {
-            background: rgba(255, 255, 255, 0.05);
+        .shop-buy-btn {
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
             padding: 10px;
             border-radius: 6px;
             font-weight: 600;
-            font-size: 14px;
+            cursor: pointer;
             transition: all 0.2s;
         }
 
-        .shop-card:hover .buy-btn {
-            background: #00ff87;
-            color: #000;
-            border-color: #00ff87;
+        .shop-card:hover .shop-buy-btn {
+            background: #a855f7;
+            border-color: #a855f7;
         }
 
-        /* --- 3. RULES PAGE STYLE --- */
-        .rules-card {
-            background: #14161c;
+        /* --- 3. MODERN RULES PAGE --- */
+        .rules-wrapper {
+            background: rgba(20, 21, 28, 0.6);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 35px;
+            border-radius: 12px;
+            padding: 40px;
         }
 
-        .rules-card h2 {
+        .rules-wrapper h2 {
             font-size: 28px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
         }
 
-        .rule-item {
-            margin-bottom: 20px;
+        .rule-box {
             display: flex;
-            gap: 15px;
+            gap: 20px;
+            margin-bottom: 25px;
         }
 
-        .rule-num {
-            background: rgba(0, 255, 135, 0.1);
-            color: #00ff87;
+        .rule-number {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
             font-weight: 700;
-            min-width: 30px;
-            height: 30px;
+            min-width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .rule-text h4 {
+        .rule-details h4 {
             font-size: 18px;
             margin-bottom: 5px;
         }
 
-        .rule-text p {
-            color: #a0a5b5;
+        .rule-details p {
+            color: #94a3b8;
             font-size: 14px;
             line-height: 1.5;
         }
 
-        /* TOAST NOTIFICATION */
-        .toast {
+        /* TOAST ALERT */
+        .toast-notif {
             position: fixed;
             bottom: 25px;
-            background: #00ff87;
-            color: #000;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: 700;
+            background: #a855f7;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
             display: none;
-            box-shadow: 0 10px 30px rgba(0, 255, 135, 0.3);
-            animation: fadeIn 0.3s ease;
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
             z-index: 200;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
+    <div class="background-overlay"></div>
+
     <nav>
         <div class="nav-container">
-            <div class="logo">LOADSMP</div>
+            <div class="logo">🟪 Load<span>Smp</span></div>
             <div class="nav-links">
-                <button class="nav-btn active" onclick="switchPage('home')">Home</button>
-                <button class="nav-btn" onclick="switchPage('shop')">Shop</button>
-                <button class="nav-btn" onclick="switchPage('rules')">Regeln</button>
+                <button class="nav-btn active" onclick="changeTab('home')">Startseite</button>
+                <button class="nav-btn" onclick="changeTab('shop')">Shop</button>
+                <button class="nav-btn" onclick="changeTab('rules')">Regeln</button>
             </div>
-            <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="discord-main-btn">Discord</a>
+            <div class="nav-right">
+                <button class="btn-secondary" onclick="copyServerIP()">IP kopieren</button>
+                <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="btn-primary">Discord</a>
+            </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="main-content">
 
         <div id="home" class="page active">
-            <div class="hero">
-                <h1>Willkommen auf LoadSmp</h1>
-                <p>Erlebe das ultimative Minecraft-Projekt mit einer großartigen Community, einzigartigen Systemen und spannenden Kämpfen. Kopiere die IP und mach mit!</p>
-                <div class="cta-buttons">
-                    <div class="ip-box" onclick="copyIP()">📋 IP: LoadSmp.de</div>
-                    <button class="nav-btn" style="background: rgba(255,255,255,0.05); color:white;" onclick="switchPage('shop')">Zum Shop gehen →</button>
+            <div class="hero-section">
+                <h1>Willkommen bei <span>LoadSmp</span></h1>
+                <p>Kompetitives Minecraft PvP mit klarer Struktur, fairer Balance und langfristiger Progression. Kopiere unsere IP und starte noch heute dein Abenteuer!</p>
+                <div class="hero-buttons">
+                    <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="btn-discord-large">
+                        <span>Discord beitreten</span>
+                    </a>
+                    <button class="btn-outline-large" onclick="changeTab('shop')">Shop erkunden →</button>
                 </div>
             </div>
         </div>
 
         <div id="shop" class="page">
-            <div class="sale-banner">
+            <div class="shop-header">
                 <div>
-                    <h2 style="font-size: 22px;">🔥 Store Eröffnungs-Sale!</h2>
-                    <p style="color: #a0a5b5; font-size: 14px;">Eröffne ein Ticket im Discord um zu bezahlen.</p>
+                    <h2 style="font-size: 22px;">🛒 Offizieller LoadSmp Store</h2>
+                    <p style="color: #94a3b8; font-size: 14px;">Zahlungen werden sicher über unser Discord-Ticket-System abgewickelt.</p>
                 </div>
-                <div class="sale-tag">30% RABATT</div>
+                <div style="background: #a855f7; font-weight: bold; padding: 6px 12px; border-radius: 4px; font-size: 14px;">30% ERÖFFNUNGS-RABATT</div>
             </div>
 
             <div class="shop-grid">
-                <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="shop-card">
+                <div class="shop-card">
                     <div>
-                        <div class="card-icon">👑</div>
+                        <div class="shop-icon">👑</div>
                         <h3>Premium Rang</h3>
-                        <p>Sichere dir exklusive Rechte, auffällige Prefixe im Chat und coole In-Game Vorteile.</p>
+                        <p>Erhalte exklusive kosmetische Extras, Prefixes und tolle Start-Vorteile auf dem SMP.</p>
                     </div>
-                    <div class="buy-btn">Über Discord kaufen</div>
-                </a>
+                    <button class="shop-buy-btn" onclick="window.open('https://discord.gg/Eebwwj6Jhp')">Über Discord kaufen</button>
+                </div>
 
-                <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="shop-card">
+                <div class="shop-card">
                     <div>
-                        <div class="card-icon">💎</div>
+                        <div class="shop-icon">💎</div>
                         <h3>LoadPlus Rang</h3>
-                        <p>Der ultimative Rang auf LoadSmp. Maximale Rechte, exklusive Kits und vollen Support.</p>
+                        <p>Der ultimative Rang mit maximalen Rechten, besonderen Chat-Farben und wöchentlichen Kits.</p>
                     </div>
-                    <div class="buy-btn">Über Discord kaufen</div>
-                </a>
+                    <button class="shop-buy-btn" onclick="window.open('https://discord.gg/Eebwwj6Jhp')">Über Discord kaufen</button>
+                </div>
 
-                <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="shop-card">
+                <div class="shop-card">
                     <div>
-                        <div class="card-icon">🟩</div>
+                        <div class="shop-icon">🟩</div>
                         <h3>Loads (Emergils)</h3>
-                        <p>Kaufe In-Game Währung, um direkt auf dem Server mit anderen Spielern zu handeln oder Crates zu öffnen.</p>
+                        <p>Erwerbe die In-Game-Hauptwährung, um mit Spielern zu handeln oder Kisten freizuschalten.</p>
                     </div>
-                    <div class="buy-btn">Über Discord kaufen</div>
-                </a>
+                    <button class="shop-buy-btn" onclick="window.open('https://discord.gg/Eebwwj6Jhp')">Über Discord kaufen</button>
+                </div>
 
-                <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="shop-card">
+                <div class="shop-card">
                     <div>
-                        <div class="card-icon">🔑</div>
+                        <div class="shop-icon">🔑</div>
                         <h3>Crates & Keys</h3>
-                        <p>Erhalte Schlüssel für epische Kisten am Spawn und ziehe extrem seltene Items.</p>
+                        <p>Sichere dir Schlüssel für die Schatzkisten am Spawn und gewinne extrem seltene Items.</p>
                     </div>
-                    <div class="buy-btn">Über Discord kaufen</div>
-                </a>
+                    <button class="shop-buy-btn" onclick="window.open('https://discord.gg/Eebwwj6Jhp')">Über Discord kaufen</button>
+                </div>
             </div>
         </div>
 
         <div id="rules" class="page">
-            <div class="rules-card">
+            <div class="rules-wrapper">
                 <h2>Server Regelwerk</h2>
-                
-                <div class="rule-item">
-                    <div class="rule-num">1</div>
-                    <div class="rule-text">
-                        <h4>Respektvoller Umgang</h4>
-                        <p>Behandle andere Spieler so, wie du selbst behandelt werden möchtest. Beleidigungen oder Toxizität werden nicht geduldet.</p>
+
+                <div class="rule-box">
+                    <div class="rule-number">1</div>
+                    <div class="rule-details">
+                        <h4>Fairplay & Respekt</h4>
+                        <p>Toxisches Verhalten, Beleidigungen und Belästigungen jeglicher Art werden im Chat und auf dem Discord streng bestraft.</p>
                     </div>
                 </div>
 
-                <div class="rule-item">
-                    <div class="rule-num">2</div>
-                    <div class="rule-text">
-                        <h4>Hacking & Cheating</h4>
-                        <p>Das Nutzen von unerlaubten Modifikationen, Hackclients oder X-Ray ist strengstens untersagt und führt zum permanenten Bann.</p>
+                <div class="rule-box">
+                    <div class="rule-number">2</div>
+                    <div class="rule-details">
+                        <h4>Unerlaubte Modifikationen</h4>
+                        <p>Das Verwenden von Hackclients, X-Ray-Texturenpackungen oder Makros führt zu einem permanenten Netzwerkausschluss.</p>
                     </div>
                 </div>
 
-                <div class="rule-item">
-                    <div class="rule-num">3</div>
-                    <div class="rule-text">
-                        <h4>Griefing & Diebstahl</h4>
-                        <p>Das Zerstören von fremden Bauten oder das Stehlen aus Kisten ist (je nach SMP-Konzept) verboten. Haltet euch an die Absprachen.</p>
-                    </div>
-                </div>
-
-                <div class="rule-item">
-                    <div class="rule-num">4</div>
-                    <div class="rule-text">
-                        <h4>Bugusing</h4>
-                        <p>Gefundene Fehler oder Duping-Glitches müssen sofort dem Serverteam gemeldet werden. Das Ausnutzen führt zum Ausschluss.</p>
+                <div class="rule-box">
+                    <div class="rule-number">3</div>
+                    <div class="rule-details">
+                        <h4>Griefing & Duping</h4>
+                        <p>Das mutwillige Zerstören von unbeteiligten Basen sowie das Ausnutzen von Item-Duplikations-Glitches ist verboten.</p>
                     </div>
                 </div>
             </div>
@@ -433,48 +471,34 @@
 
     </div>
 
-    <div class="toast" id="toastBox">IP erfolgreich kopiert! Kopiert in die Zwischenablage.</div>
+    <div class="toast-notif" id="toast">IP-Adresse erfolgreich kopiert! Viel Spaß beim Spielen!</div>
 
     <script>
-        // Funktion zum Wechseln der Seiten (Tabs)
-        function switchPage(pageId) {
-            // Alle Seiten verstecken
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            // Alle Nav-Buttons deaktivieren
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+        // Tab-Wechsel System
+        function changeTab(tabId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-            // Die gewünschte Seite anzeigen
-            document.getElementById(pageId).classList.add('active');
-
-            // Den geklickten Button als aktiv markieren
-            const event = window.event;
-            if(event && event.target && event.target.classList.contains('nav-btn')) {
-                event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+            
+            // Setzt den Tab-Button aktiv
+            const ev = window.event;
+            if(ev && ev.target && ev.target.classList.contains('nav-btn')) {
+                ev.target.classList.add('active');
             } else {
-                // Falls man über den "Zum Shop gehen"-Button springt
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    if(btn.textContent.toLowerCase() === pageId) {
-                        btn.classList.add('active');
-                    }
+                // Fallback, wenn über einen Button im Inhalt gewechselt wird
+                document.querySelectorAll('.nav-btn').forEach(b => {
+                    if(b.getAttribute('onclick').includes(tabId)) b.classList.add('active');
                 });
             }
         }
 
-        // Funktion zum Kopieren der Server-IP
-        function copyIP() {
-            const ip = "LoadSmp.de"; 
-            navigator.clipboard.writeText(ip);
-            
-            const toast = document.getElementById("toastBox");
+        // IP in Zwischenablage kopieren
+        function copyServerIP() {
+            navigator.clipboard.writeText("LoadSmp.de");
+            const toast = document.getElementById("toast");
             toast.style.display = "block";
-            
-            setTimeout(() => {
-                toast.style.display = "none";
-            }, 3000);
+            setTimeout(() => { toast.style.display = "none"; }, 3000);
         }
     </script>
 

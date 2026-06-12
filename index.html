@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoadTiers | Rankings</title>
     <style>
-        /* --- DESIGN SYSTEM (ICON TIERS LOOK) --- */
+        /* --- DESIGN SYSTEM (NEON RED GAMING LOOK) --- */
         :root {
-            --bg-color: #030914;
-            --panel-bg: #071120;
-            --row-bg: #09162a;
-            --row-hover: #0d203d;
-            --accent-cyan: #00bfff;
-            --accent-blue: #3b82f6;
+            --bg-color: #060202;
+            --panel-bg: #110505;
+            --row-bg: #180808;
+            --row-hover: #260d0d;
+            --accent-red: #ff3333;       /* Klares Neon-Rot */
+            --accent-glow: #ff0000;      /* Für Leuchteffekte */
             --text-main: #ffffff;
-            --text-muted: #4e6178;
+            --text-muted: #784e4e;
             --text-gold: #ffd700;
             --text-silver: #c0c0c0;
             --text-bronze: #cd7f32;
             
             /* Tier Badge Colors */
-            --ht-color: #ff5555;
+            --ht-color: #ff3333;
             --lt-color: #ffaa00;
         }
 
@@ -38,11 +38,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Subtiles Grid-Muster im Hintergrund wie auf dem Screenshot */
+            /* Rotes Grid-Muster im Hintergrund */
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                radial-gradient(circle at 50% 0%, #0c2347 0%, var(--bg-color) 80%);
+                linear-gradient(rgba(255, 51, 51, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 51, 51, 0.02) 1px, transparent 1px),
+                radial-gradient(circle at 50% 0%, #470c0c 0%, var(--bg-color) 80%);
             background-size: 40px 40px, 40px 40px, 100% 100%;
         }
 
@@ -53,8 +53,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(3, 9, 20, 0.8);
+            border-bottom: 1px solid rgba(255, 51, 51, 0.1);
+            background: rgba(6, 2, 2, 0.85);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
@@ -72,7 +72,8 @@
         }
 
         .brand span {
-            color: var(--accent-cyan);
+            color: var(--accent-red);
+            text-shadow: 0 0 10px var(--accent-glow);
         }
 
         .nav-links {
@@ -81,46 +82,53 @@
         }
 
         .nav-links a {
-            color: #8a9ba8;
+            color: #a88a8a;
             text-decoration: none;
             font-size: 14px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: color 0.2s;
+            transition: all 0.2s;
             padding: 5px 0;
+            border-bottom: 2px solid transparent;
         }
 
         .nav-links a.active, .nav-links a:hover {
-            color: var(--accent-cyan);
-            border-bottom: 2px solid var(--accent-cyan);
+            color: var(--accent-red);
+            border-bottom: 2px solid var(--accent-red);
+            text-shadow: 0 0 8px var(--accent-glow);
         }
 
         /* --- SUB-NAVBAR (GAMEMODES) --- */
         .gamemode-nav {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             width: 100%;
             padding: 15px;
-            background: rgba(7, 17, 32, 0.5);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(17, 5, 5, 0.6);
+            border-bottom: 1px solid rgba(255, 51, 51, 0.05);
+            flex-wrap: wrap;
         }
 
         .gamemode-nav button {
-            background: none;
-            border: none;
-            color: #5c6f84;
+            background: rgba(255, 51, 51, 0.03);
+            border: 1px solid rgba(255, 51, 51, 0.1);
+            color: #845c5c;
             font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: color 0.2s;
-            padding: 5px 10px;
+            transition: all 0.2s;
+            padding: 6px 16px;
+            border-radius: 4px;
         }
 
         .gamemode-nav button.active, .gamemode-nav button:hover {
-            color: var(--accent-cyan);
+            color: var(--text-main);
+            background: rgba(255, 51, 51, 0.2);
+            border-color: var(--accent-red);
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
         }
 
         /* --- MAIN CONTAINER --- */
@@ -130,7 +138,7 @@
             padding: 40px 20px;
         }
 
-        .discord-btn-container {
+        .top-bar {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 20px;
@@ -144,10 +152,7 @@
             border-radius: 8px;
             font-weight: 700;
             font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
             transition: transform 0.2s, background 0.2s;
         }
 
@@ -160,20 +165,20 @@
         .leaderboard-panel {
             background: var(--panel-bg);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 51, 51, 0.1);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
         }
 
         .table-header {
             display: grid;
             grid-template-columns: 60px 280px 1fr 100px;
             padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 51, 51, 0.1);
             font-size: 11px;
             font-weight: 800;
-            color: #5c6f84;
+            color: #845c5c;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -184,7 +189,7 @@
             padding: 12px 20px;
             align-items: center;
             background: var(--row-bg);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 51, 51, 0.03);
             transition: background 0.15s;
         }
 
@@ -196,11 +201,11 @@
         .rank {
             font-weight: 900;
             font-size: 16px;
-            color: #8a9ba8;
+            color: #a88a8a;
         }
-        .table-row:nth-child(2) .rank { color: var(--text-gold); font-size: 18px; }   /* 1st */
-        .table-row:nth-child(3) .rank { color: var(--text-silver); font-size: 18px; } /* 2nd */
-        .table-row:nth-child(4) .rank { color: var(--text-bronze); font-size: 18px; } /* 3rd */
+        .table-row:nth-child(2) .rank { color: var(--text-gold); font-size: 18px; text-shadow: 0 0 5px rgba(255,215,0,0.3); }
+        .table-row:nth-child(3) .rank { color: var(--text-silver); font-size: 18px; }
+        .table-row:nth-child(4) .rank { color: var(--text-bronze); font-size: 18px; }
 
         /* Player Profile Info */
         .player-info {
@@ -218,9 +223,9 @@
         .player-avatar {
             width: 100%;
             height: 100%;
-            border-radius: 50%; /* Runde Avatare wie im Bild */
-            background: #112233;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            background: #221111;
+            border: 2px solid rgba(255, 51, 51, 0.2);
         }
 
         .player-details {
@@ -237,40 +242,38 @@
 
         .player-sub {
             font-size: 11px;
-            color: #5c6f84;
+            color: #845c5c;
             font-weight: 600;
         }
 
-        /* Tiers/Gamemodes Badges Area */
+        /* Tiers Badges Area */
         .player-tiers {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
         }
 
-        /* Einzelnes Icon + Text Block */
         .tier-badge {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             padding: 6px;
             border-radius: 8px;
             min-width: 44px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 51, 51, 0.05);
         }
 
-        /* Die runden Kreise für Items */
         .tier-icon-circle {
             width: 28px;
             height: 28px;
-            background: #101f35;
+            background: #250c0c;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 51, 51, 0.2);
         }
 
         .tier-icon-circle img {
@@ -278,7 +281,6 @@
             height: 18px;
         }
 
-        /* Kleiner Text unter dem Icon (z.B. HT1) */
         .tier-sub-text {
             font-size: 9px;
             font-weight: 800;
@@ -287,11 +289,12 @@
         .tier-sub-text.ht { color: var(--ht-color); }
         .tier-sub-text.lt { color: var(--lt-color); }
 
-        /* Points Column (Right Side) */
+        /* Points Column */
         .points {
             font-weight: 800;
             font-size: 15px;
-            color: var(--accent-cyan);
+            color: var(--accent-red);
+            text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
             text-align: right;
             padding-right: 10px;
         }
@@ -302,27 +305,24 @@
     <header>
         <div class="brand">Load<span>Tiers</span></div>
         <div class="nav-links">
-            <a href="#" class="active">Rankings</a>
-            <a href="#">Staff</a>
-            <a href="#">Discord</a>
+            <a href="#" class="nav-item active" onclick="changeTab(event, 'rankings')">Rankings</a>
+            <a href="#" class="nav-item" onclick="changeTab(event, 'staff')">Staff</a>
+            <a href="https://discord.gg/DEIN-LINK" target="_blank">Discord</a>
         </div>
     </header>
 
     <div class="gamemode-nav">
-        <button class="active">Overall</button>
-        <button>Sword</button>
-        <button>CPvP</button>
-        <button>Axe</button>
-        <button>SMP</button>
-        <button>UHC</button>
-        <button>Pot</button>
+        <button class="gm-btn active" onclick="filterGamemode(event, 'overall')">Overall</button>
+        <button class="gm-btn" onclick="filterGamemode(event, 'sword')">Sword</button>
+        <button class="gm-btn" onclick="filterGamemode(event, 'cpvp')">CPvP</button>
+        <button class="gm-btn" onclick="filterGamemode(event, 'axe')">Axe</button>
+        <button class="gm-btn" onclick="filterGamemode(event, 'smp')">SMP</button>
+        <button class="gm-btn" onclick="filterGamemode(event, 'uhc')">UHC</button>
     </div>
 
     <main>
-        <div class="discord-btn-container">
-            <a href="#" class="discord-btn">
-                <span>Join Discord</span>
-            </a>
+        <div class="top-bar">
+            <a href="https://discord.gg/DEIN-LINK" target="_blank" class="discord-btn">Join Discord</a>
         </div>
 
         <div class="leaderboard-panel">
@@ -334,81 +334,129 @@
                 <div style="text-align: right; padding-right: 10px;">Pts</div>
             </div>
 
-            <div class="table-row">
-                <div class="rank">1</div>
-                <div class="player-info">
-                    <div class="avatar-wrapper">
-                        <img class="player-avatar" src="https://mc-heads.net/avatar/octryx/38" alt="">
-                    </div>
-                    <div class="player-details">
-                        <span class="player-name">octryx ★</span>
-                        <span class="player-sub">? HT1 ◆ 206 pts</span>
-                    </div>
+            <div id="leaderboard-content">
                 </div>
-                <div class="player-tiers">
-                    <div class="tier-badge">
-                        <div class="tier-icon-circle"><img src="https://minecraft.wiki/images/End_Crystal_JE2_BE2.png" alt="CPvP"></div>
-                        <span class="tier-sub-text ht">HT1</span>
-                    </div>
-                    <div class="tier-badge">
-                        <div class="tier-icon-circle"><img src="https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png" alt="Sword"></div>
-                        <span class="tier-sub-text ht">HT1</span>
-                    </div>
-                    <div class="tier-badge">
-                        <div class="tier-icon-circle"><img src="https://minecraft.wiki/images/Splash_Potion_of_Healing_JE2_BE2.png" alt="Pot"></div>
-                        <span class="tier-sub-text ht">HT2</span>
-                    </div>
-                </div>
-                <div class="points">206</div>
-            </div>
-
-            <div class="table-row">
-                <div class="rank">2</div>
-                <div class="player-info">
-                    <div class="avatar-wrapper">
-                        <img class="player-avatar" src="https://mc-heads.net/avatar/zNiclas_/38" alt="">
-                    </div>
-                    <div class="player-details">
-                        <span class="player-name">zNiclas_</span>
-                        <span class="player-sub">? HT1 ◆ 116 pts</span>
-                    </div>
-                </div>
-                <div class="player-tiers">
-                    <div class="tier-badge">
-                        <div class="tier-icon-circle"><img src="https://minecraft.wiki/images/Netherite_Axe_JE2.png" alt="Axe"></div>
-                        <span class="tier-sub-text ht">HT1</span>
-                    </div>
-                    <div class="tier-badge">
-                        <div class="tier-icon-circle"><img src="https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png" alt="Sword"></div>
-                        <span class="tier-sub-text lt">LT2</span>
-                    </div>
-                </div>
-                <div class="points">116</div>
-            </div>
-
-            <div class="table-row">
-                <div class="rank">3</div>
-                <div class="player-info">
-                    <div class="avatar-wrapper">
-                        <img class="player-avatar" src="https://mc-heads.net/avatar/Steve/38" alt="">
-                    </div>
-                    <div class="player-details">
-                        <span class="player-name">DeinName</span>
-                        <span class="player-sub">? HT4 ◆ 74 pts</span>
-                    </div>
-                </div>
-                <div class="player-tiers">
-                    <div class="tier-badge">
-                        <div class="tier-icon-circle"><img src="https://minecraft.wiki/images/End_Crystal_JE2_BE2.png" alt="CPvP"></div>
-                        <span class="tier-sub-text ht">HT4</span>
-                    </div>
-                </div>
-                <div class="points">74</div>
-            </div>
 
         </div>
     </main>
 
+    <script>
+        // Beispiel-Datenbank für deine Spieler und deren Tiers in den Modi
+        const playersData = [
+            {
+                rank: 1,
+                name: "octryx ★",
+                ign: "octryx",
+                sub: "HT1 ◆ 206 pts",
+                points: 206,
+                tiers: {
+                    overall: [
+                        { icon: "https://minecraft.wiki/images/End_Crystal_JE2_BE2.png", type: "ht", label: "HT1" },
+                        { icon: "https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png", type: "ht", label: "HT1" },
+                        { icon: "https://minecraft.wiki/images/Splash_Potion_of_Healing_JE2_BE2.png", type: "ht", label: "HT2" }
+                    ],
+                    cpvp: [{ icon: "https://minecraft.wiki/images/End_Crystal_JE2_BE2.png", type: "ht", label: "HT1" }],
+                    sword: [{ icon: "https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png", type: "ht", label: "HT1" }]
+                }
+            },
+            {
+                rank: 2,
+                name: "zNiclas_",
+                ign: "zNiclas_",
+                sub: "HT1 ◆ 116 pts",
+                points: 116,
+                tiers: {
+                    overall: [
+                        { icon: "https://minecraft.wiki/images/Netherite_Axe_JE2.png", type: "ht", label: "HT1" },
+                        { icon: "https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png", type: "lt", label: "LT2" }
+                    ],
+                    axe: [{ icon: "https://minecraft.wiki/images/Netherite_Axe_JE2.png", type: "ht", label: "HT1" }],
+                    sword: [{ icon: "https://minecraft.wiki/images/Diamond_Sword_JE3_BE3.png", type: "lt", label: "LT2" }]
+                }
+            },
+            {
+                rank: 3,
+                name: "DeinName",
+                ign: "Steve",
+                sub: "HT4 ◆ 74 pts",
+                points: 74,
+                tiers: {
+                    overall: [{ icon: "https://minecraft.wiki/images/End_Crystal_JE2_BE2.png", type: "ht", label: "HT4" }],
+                    cpvp: [{ icon: "https://minecraft.wiki/images/End_Crystal_JE2_BE2.png", type: "ht", label: "HT4" }]
+                }
+            }
+        ];
+
+        // Funktion: Rendert das Leaderboard basierend auf dem ausgewählten Gamemode
+        function renderLeaderboard(gamemode) {
+            const container = document.getElementById("leaderboard-content");
+            container.innerHTML = ""; // Altes löschen
+
+            // Filtere Spieler, die in diesem Modus gelistet sind
+            playersData.forEach(player => {
+                if (player.tiers[gamemode]) {
+                    let badgesHTML = "";
+                    player.tiers[gamemode].forEach(badge => {
+                        badgesHTML += `
+                            <div class="tier-badge">
+                                <div class="tier-icon-circle"><img src="${badge.icon}" alt="badge"></div>
+                                <span class="tier-sub-text ${badge.type}">${badge.label}</span>
+                            </div>
+                        `;
+                    });
+
+                    const rowHTML = `
+                        <div class="table-row">
+                            <div class="rank">${player.rank}</div>
+                            <div class="player-info">
+                                <div class="avatar-wrapper">
+                                    <img class="player-avatar" src="https://mc-heads.net/avatar/${player.ign}/38" alt="">
+                                </div>
+                                <div class="player-details">
+                                    <span class="player-name">${player.name}</span>
+                                    <span class="player-sub">${player.sub}</span>
+                                </div>
+                            </div>
+                            <div class="player-tiers">${badgesHTML}</div>
+                            <div class="points">${player.points}</div>
+                        </div>
+                    `;
+                    container.innerHTML += rowHTML;
+                }
+            });
+        }
+
+        // Funktion: Klick-Event für Gamemode Buttons
+        function filterGamemode(event, mode) {
+            // Alle Gamemode Buttons deaktivieren
+            document.querySelectorAll(".gm-btn").forEach(btn => btn.classList.remove("active"));
+            // Geklickten Button aktivieren
+            event.target.classList.add("active");
+            // Liste neu laden
+            renderLeaderboard(mode);
+        }
+
+        // Funktion: Klick-Event für die Haupt-Navbar (Rankings / Staff)
+        function changeTab(event, tabName) {
+            event.preventDefault();
+            document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+            event.target.classList.add("active");
+            
+            if (tabName === 'staff') {
+                document.getElementById("leaderboard-content").innerHTML = `
+                    <div style="padding: 40px; text-align: center; color: #845c5c; font-weight: bold;">
+                        Staff-Mitglieder werden hier bald angezeigt!
+                    </div>
+                `;
+            } else {
+                renderLeaderboard('overall');
+            }
+        }
+
+        // Beim ersten Laden der Seite direkt "Overall" anzeigen
+        window.onload = function() {
+            renderLeaderboard('overall');
+        };
+    </script>
 </body>
 </html>
-

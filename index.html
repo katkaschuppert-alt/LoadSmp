@@ -2,10 +2,292 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>LoadSmp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoadSmp | Offizieller Store</title>
+    <style>
+        /* Modernes Farbschema & Schriftart */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* HEADER BEREICH */
+        .header {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #2a2a2a;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .server-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Server IP Button */
+        .ip-box {
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .ip-box:hover {
+            background-color: #388e3c;
+            transform: translateY(-2px);
+        }
+
+        .server-text h1 {
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        .server-text p {
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+
+        /* DISCORD BUTTON OBEN */
+        .discord-btn {
+            background-color: #5865F2;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(88, 101, 242, 0.2);
+        }
+
+        .discord-btn:hover {
+            background-color: #4752C4;
+            transform: translateY(-2px);
+        }
+
+        /* ANIMIERTER SALE BANNER */
+        .sale-banner {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sale-tag {
+            background-color: #4caf50;
+            color: black;
+            font-weight: 900;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 22px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .sale-title {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* SHOP KATEGORIEN (GRID) */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .shop-card {
+            background: linear-gradient(135deg, #112d1b 0%, #1a1a1a 100%);
+            border: 2px solid #1b4d2a;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+        }
+
+        .shop-card:hover {
+            transform: scale(1.03);
+            border-color: #4caf50;
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.15);
+        }
+
+        .card-content h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-content p {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+
+        /* Unicode Icons als Ersatz für Bilder */
+        .card-icon {
+            font-size: 50px;
+            opacity: 0.8;
+            transition: transform 0.3s ease;
+        }
+
+        .shop-card:hover .card-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        /* ANIMATIONEN */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+
+        /* Popup-Benachrichtigung beim IP Kopieren */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            background-color: #4caf50;
+            color: black;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    (es geht)
+
+    <div class="container">
+
+        <div class="header">
+            <div class="server-info">
+                <div class="ip-box" id="ipButton" onclick="copyIP()">
+                    <span>📋</span>
+                    <span id="ipText">LoadSmp.de</span>
+                </div>
+                <div class="server-text">
+                    <h1>LoadSmp Netzwerk</h1>
+                    <p>Willkommen im offiziellen Webshop!</p>
+                </div>
+            </div>
+            <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="discord-btn">Mein Discord</a>
+        </div>
+
+        <div class="sale-banner">
+            <div class="sale-tag">30% SALE</div>
+            <div class="sale-title">🔥 ERÖFFNUNGS-SALE AKTIV 🔥</div>
+            <div style="font-size: 14px; color: #a0a0a0; font-weight: bold; text-align: right;">
+                Ränge & Loads<br><span style="color: #4caf50;">Günstiger im Ticket</span>
+            </div>
+        </div>
+
+        <div class="shop-grid">
+
+            <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="shop-card">
+                <div class="card-content">
+                    <h2>Premium Rang</h2>
+                    <p>Klicke für Discord-Kauf-Ticket</p>
+                    <p style="color: #4caf50; margin-top: 5px; font-weight: bold;">• Exklusive Rechte & Kit</p>
+                </div>
+                <div class="card-icon">👑</div>
+            </a>
+
+            <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="shop-card">
+                <div class="card-content">
+                    <h2>LoadPlus Rang</h2>
+                    <p>Klicke für Discord-Kauf-Ticket</p>
+                    <p style="color: #4caf50; margin-top: 5px; font-weight: bold;">• Höchster Rang + Extras</p>
+                </div>
+                <div class="card-icon">💎</div>
+            </a>
+
+            <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="shop-card">
+                <div class="card-content">
+                    <h2>Loads (Emergils)</h2>
+                    <p>In-Game Währung kaufen</p>
+                    <p style="color: #4caf50; margin-top: 5px; font-weight: bold;">• Für Crates & Items</p>
+                </div>
+                <div class="card-icon">emerald🟩</div>
+            </a>
+
+            <a href="https://discord.gg/Eebwwj6Jhp" target="_blank" class="shop-card">
+                <div class="card-content">
+                    <h2>Crates & Keys</h2>
+                    <p>Öffne epische Schatzkisten</p>
+                    <p style="color: #4caf50; margin-top: 5px; font-weight: bold;">• Tolle Gewinne sichern</p>
+                </div>
+                <div class="card-icon">🔑</div>
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="toast" id="toastBox">IP erfolgreich kopiert! Viel Spaß beim Spielen!</div>
+
+    <script>
+        // Funktion zum automatischen Kopieren der Server-IP
+        function copyIP() {
+            const ip = "LoadSmp.de"; // Hier kannst du deine echte IP eintragen, falls sie anders heißt
+            navigator.clipboard.writeText(ip);
+            
+            const toast = document.getElementById("toastBox");
+            toast.style.display = "block";
+            
+            // Nach 3 Sekunden blendet sich die Nachricht wieder aus
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 3000);
+        }
+    </script>
+
 </body>
 </html>
-

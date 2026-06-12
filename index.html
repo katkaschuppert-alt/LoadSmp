@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoadTrading | Professional Pro Terminal</title>
+    <title>LoadTrading | Institutional Live Terminal</title>
     <style>
-        /* --- NEON RED TRADING THEME --- */
+        /* --- 1:1 CUSTOM EXCHANGE LOOK (NEON ROT) --- */
         :root {
-            --bg-color: #060202;
-            --panel-bg: #110505;
-            --panel-border: rgba(255, 51, 51, 0.15);
+            --bg-color: #040202;
+            --panel-bg: #0c0404;
+            --panel-border: #260808;
             --accent-red: #ff3333;
-            --accent-glow: #ff0000;
+            --accent-glow: rgba(255, 51, 51, 0.4);
             --text-main: #ffffff;
-            --text-muted: #845c5c;
+            --text-muted: #6e4848;
             --green-trade: #00ff66;
             --red-trade: #ff3333;
         }
@@ -23,100 +23,137 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* --- HEADER --- */
+        /* --- OBEN: TICKER-LEISTE --- */
         header {
-            width: 100%;
-            padding: 12px 30px;
+            height: 50px;
             background: var(--panel-bg);
             border-bottom: 1px solid var(--panel-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 60px;
+            padding: 0 20px;
+            z-index: 10;
         }
 
-        .brand { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
-        .brand span { color: var(--accent-red); text-shadow: 0 0 10px var(--accent-glow); }
+        .brand { font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+        .brand span { color: var(--accent-red); text-shadow: 0 0 10px var(--accent-red); }
 
-        /* --- WALLET INFOS --- */
-        .account-info {
+        .market-ticker {
             display: flex;
-            gap: 25px;
-            background: rgba(0,0,0,0.4);
-            padding: 6px 20px;
-            border-radius: 6px;
+            gap: 30px;
+        }
+        .ticker-block { display: flex; flex-direction: column; justify-content: center; }
+        .ticker-block span:first-child { color: var(--text-muted); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .ticker-block span:last-child { font-size: 12px; font-weight: 700; }
+
+        .account-box {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .balance-pill {
+            background: rgba(0, 0, 0, 0.6);
             border: 1px solid var(--panel-border);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
         }
 
-        .info-block { display: flex; flex-direction: column; }
-        .info-block span:first-child { font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
-        .info-block span:last-child { font-size: 15px; font-weight: 800; color: var(--green-trade); }
-
-        /* --- MAIN INTERFACE --- */
-        .trading-container {
+        /* --- MAIN TERMINAL LAYOUT --- */
+        .terminal-core {
             display: grid;
-            grid-template-columns: 1fr 340px;
-            height: calc(100vh - 60px);
+            grid-template-columns: 1fr 300px;
+            height: calc(100vh - 50px);
             width: 100%;
         }
 
-        /* Chart Bereich (Erweitertes TradingView Widget) */
-        .chart-box {
+        /* Chart Center */
+        .chart-container {
             background: #000;
             height: 100%;
             width: 100%;
+            position: relative;
         }
 
-        /* Sidebar für Orders & Portfolio */
-        .sidebar {
+        /* Rechter Order-Sektor */
+        .order-sidebar {
             background: var(--panel-bg);
             border-left: 1px solid var(--panel-border);
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             overflow-y: auto;
         }
 
-        .widget-title {
+        .panel-heading {
             font-size: 11px;
             text-transform: uppercase;
             color: var(--text-muted);
             font-weight: 800;
             letter-spacing: 1px;
-            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--panel-border);
         }
 
-        /* Trade Controls (Buy/Sell) */
-        .trade-panel {
-            background: rgba(0,0,0,0.3);
+        .tab-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #000;
+            padding: 2px;
+            border-radius: 4px;
             border: 1px solid var(--panel-border);
-            padding: 15px;
-            border-radius: 8px;
+        }
+        .tab-group button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .tab-group button.active {
+            background: var(--panel-border);
+            color: #fff;
+            border-radius: 3px;
         }
 
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 11px; color: var(--text-muted); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
-        .input-group input {
-            width: 100%;
-            background: #060202;
+        .input-field {
+            background: #000;
             border: 1px solid var(--panel-border);
             padding: 10px;
-            color: #fff;
             border-radius: 4px;
-            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .input-group input:focus { outline: none; border-color: var(--accent-red); }
+        .input-field label { font-size: 10px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+        .input-field input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            text-align: right;
+            font-weight: 700;
+            width: 60%;
+            font-size: 13px;
+        }
+        .input-field input:focus { outline: none; }
 
-        .action-btns { display: flex; gap: 10px; }
-        .btn {
-            flex: 1;
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .action-btn {
             padding: 12px;
             border: none;
             border-radius: 4px;
@@ -124,90 +161,90 @@
             font-weight: 800;
             text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.1s, opacity 0.2s;
+            font-size: 12px;
+            transition: opacity 0.1s;
         }
-        .btn:active { transform: scale(0.98); }
-        .btn-buy { background: var(--green-trade); box-shadow: 0 0 10px rgba(0, 255, 102, 0.15); }
-        .btn-sell { background: var(--red-trade); box-shadow: 0 0 10px rgba(255, 51, 51, 0.15); }
-        .btn:hover { opacity: 0.9; }
+        .action-btn:hover { opacity: 0.9; }
+        .buy-long { background: var(--green-trade); box-shadow: 0 4px 10px rgba(0, 255, 102, 0.1); }
+        .sell-short { background: var(--red-trade); box-shadow: 0 4px 10px rgba(255, 51, 51, 0.1); }
 
-        /* Portfolio Übersicht */
-        .inventory-panel {
-            background: rgba(0,0,0,0.3);
+        /* Terminal Activity Tracker */
+        .terminal-log {
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--panel-border);
-            padding: 15px;
-            border-radius: 8px;
+            border-radius: 4px;
+            padding: 10px;
+            flex-grow: 1;
+            font-family: monospace;
+            font-size: 10px;
+            color: #805a5a;
+            overflow-y: auto;
         }
-
-        .inv-row {
+        .log-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 51, 51, 0.05);
-            font-size: 13px;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 51, 51, 0.01);
         }
-        .inv-row:last-child { border: none; }
-        .inv-row span:last-child { font-weight: 700; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand">Load<span>Trading</span> Pro</div>
-        <div class="account-info">
-            <div class="info-block">
-                <span>Fake Guthaben</span>
-                <div id="balance-display">$25,000.00</div>
-            </div>
-            <div class="info-block">
-                <span>Aktive Trades</span>
-                <div id="trades-count" style="color: #fff;">0 offene Positionen</div>
-            </div>
+        <div class="brand">Load<span>Terminal</span> Pro</div>
+        
+        <div class="market-ticker">
+            <div class="ticker-block"><span>Paar</span><span style="color: var(--accent-red);">AUDCAD (Forex)</span></div>
+            <div class="ticker-block"><span>Smart Money Mode</span><span style="color: var(--green-trade);">Enabled</span></div>
+            <div class="ticker-block"><span>Feeds</span><span style="color: #aaa;">Binance / IDC</span></div>
+        </div>
+
+        <div class="account-box">
+            <div class="balance-pill">Guthaben: <span id="wallet-amt" style="color: var(--green-trade);">$100,000.00</span></div>
         </div>
     </header>
 
-    <div class="trading-container">
+    <div class="terminal-core">
         
-        <div class="chart-box">
-            <div id="advanced-chart-widget" style="width: 100%; height: 100%;"></div>
+        <div class="chart-container">
+            <div id="tradingview-full-matrix" style="width: 100%; height: 100%;"></div>
         </div>
 
-        <div class="sidebar">
-            
-            <div class="trade-panel">
-                <div class="widget-title">Fake Order ausführen</div>
-                
-                <div class="input-group">
-                    <label>Einsatz in USD ($)</label>
-                    <input type="number" id="usd-amount" value="2500" min="10">
+        <div class="order-sidebar">
+            <div>
+                <div class="panel-heading" style="margin-bottom: 12px;">Order Panel</div>
+                <div class="tab-group" style="margin-bottom: 12px;">
+                    <button class="active">Market</button>
+                    <button>Limit</button>
                 </div>
 
-                <div class="action-btns">
-                    <button class="btn btn-buy" onclick="tradeAction('LONG / KAUFEN')">Long</button>
-                    <button class="btn btn-sell" onclick="callShort('SHORT / VERKAUFEN')">Short</button>
+                <div class="input-field" style="margin-bottom: 15px;">
+                    <label>Einsatz ($)</label>
+                    <input type="number" id="trade-val" value="10000">
+                </div>
+
+                <div class="btn-grid">
+                    <button class="action-btn buy-long" onclick="triggerPosition('BUY / LONG')">Buy Long</button>
+                    <button class="action-btn sell-short" onclick="triggerPosition('SELL / SHORT')">Sell Short</button>
                 </div>
             </div>
 
-            <div class="inventory-panel">
-                <div class="widget-title">Dein Log-Buch</div>
-                <div class="inv-row">
-                    <span>Hebel-Modus:</span>
-                    <span style="color: var(--accent-red);">1X (Standard)</span>
-                </div>
-                <div class="inv-row" style="flex-direction: column; gap: 5px;">
-                    <span style="color: var(--text-muted);">Letzte Aktion:</span>
-                    <span id="last-action-log" style="font-size: 11px; color: #aaa; font-family: monospace;">Keine Trades aufgegeben...</span>
+            <div class="terminal-log">
+                <div class="panel-heading" style="margin-bottom: 8px; border-color: rgba(255,51,51,0.05);">Aktivitäts-Protokoll</div>
+                <div id="log-anchor">
+                    <div class="log-item"><span>[Core]</span><span>Zeichenwerkzeuge initialisiert.</span></div>
+                    <div class="log-item"><span>[Feeds]</span><span>SMC-Skripte aktiv geschaltet.</span></div>
                 </div>
             </div>
-
         </div>
+
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script type="text/javascript">
         new TradingView.widget({
             "autosize": true,
-            "symbol": "FX:AUDCAD", /* Start-Symbol (Kann der User oben links im Chart frei wechseln!) */
+            "symbol": "FX:AUDCAD",
             "interval": "15",
             "timezone": "Europe/Berlin",
             "theme": "dark",
@@ -215,48 +252,41 @@
             "locale": "de",
             "enable_publishing": false,
             
-            /* DIESE ZWEI OPTIONEN AKTIVIEREN DIE CHEF-LEISTE (PINSEL, CO.) */
-            "hide_side_toolbar": false,     /* Macht die linke Zeichenleiste sichtbar */
-            "withdateranges": true,
-            "allow_symbol_change": true,    /* Erlaubt das Suchen JEDER Aktie (Apple, Tesla, Gold, etc.) */
-            "details": true,
-            "hotlist": true,
-            "calendar": true,
-            
+            /* DIESE ATTRIBUTE ERZWINGEN DIE ECHTE 1:1 TRADINGVIEW KOPIE */
+            "hide_side_toolbar": false,        /* Schaltet die komplette Werkzeugleiste (Pinsel, Linien etc.) links ein */
+            "withdateranges": true,            /* Fügt die Zeitspannen unten hinzu */
+            "allow_symbol_change": true,       /* Erlaubt das Suchen von Gold (XAUUSD), Krypto, Aktien */
+            "save_image": true,                /* Screenshot-Funktion für Charts */
             "studies": [
-                "RSI@tv-basicstudies",      /* Fügt direkt beim Start standardmäßig den RSI Indikator hinzu */
-                "MASimple@tv-basicstudies"  /* Moving Average */
+                "RSI@tv-basicstudies",         /* Standard-Indikatoren direkt vorgeladen */
+                "StochasticRSI@tv-basicstudies"
             ],
-            "container_id": "advanced-chart-widget"
+            "container_id": "tradingview-full-matrix"
         });
     </script>
 
     <script>
-        let fakeBalance = 25000;
-        let activeTrades = 0;
+        let currentBalance = 100000;
 
-        function updateDisplay() {
-            document.getElementById("balance-display").innerText = `$${fakeBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-            document.getElementById("trades-count").innerText = `${activeTrades} offene Positionen`;
-        }
-
-        function tradeAction(type) {
-            const money = parseFloat(document.getElementById("usd-amount").value);
-            if(isNaN(money) || money <= 0) return;
-
-            if(money > fakeBalance) {
-                alert("Nicht genug Guthaben!");
+        function triggerPosition(direction) {
+            const sum = parseFloat(document.getElementById("trade-val").value);
+            if(isNaN(sum) || sum <= 0 || sum > currentBalance) {
+                alert("Fehlerhafter Betrag!");
                 return;
             }
 
-            fakeBalance -= money;
-            activeTrades++;
-            document.getElementById("last-action-log").innerText = `SUCCESS: ${type} im Wert von $${money}`;
-            updateDisplay();
-        }
-
-        function callShort() {
-            tradeAction('SHORT / VERKAUFEN');
+            currentBalance -= sum;
+            document.getElementById("wallet-amt").innerText = `$${currentBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            
+            const logBox = document.getElementById("log-anchor");
+            const entry = document.createElement("div");
+            entry.className = "log-row";
+            entry.style.display = "flex";
+            entry.style.justifyContent = "space-between";
+            entry.style.padding = "4px 0";
+            entry.style.borderBottom = "1px solid rgba(255, 51, 51, 0.01)";
+            entry.innerHTML = `<span style="color: ${direction.includes('BUY') ? '#00ff66' : '#ff3333'}">[TRADE] ${direction}</span><span>$${sum}</span>`;
+            logBox.prepend(entry);
         }
     </script>
 </body>

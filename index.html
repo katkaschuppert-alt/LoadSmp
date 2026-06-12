@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoadBot | Local Hoster</title>
+    <title>LoadTrading | Professional Pro Terminal</title>
     <style>
+        /* --- NEON RED TRADING THEME --- */
         :root {
             --bg-color: #060202;
             --panel-bg: #110505;
+            --panel-border: rgba(255, 51, 51, 0.15);
             --accent-red: #ff3333;
             --accent-glow: #ff0000;
             --text-main: #ffffff;
             --text-muted: #845c5c;
-            --success: #00ff66;
+            --green-trade: #00ff66;
+            --red-trade: #ff3333;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
@@ -23,183 +26,237 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            background-image: 
-                linear-gradient(rgba(255, 51, 51, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 51, 51, 0.02) 1px, transparent 1px),
-                radial-gradient(circle at 50% 0%, #470c0c 0%, var(--bg-color) 80%);
-            background-size: 40px 40px, 40px 40px, 100% 100%;
+            overflow: hidden;
         }
 
+        /* --- HEADER --- */
         header {
             width: 100%;
-            padding: 20px 40px;
-            border-bottom: 1px solid rgba(255, 51, 51, 0.1);
-            background: rgba(6, 2, 2, 0.85);
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .brand { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
-        .brand span { color: var(--accent-red); text-shadow: 0 0 10px var(--accent-glow); }
-
-        main { width: 100%; max-width: 800px; padding: 40px 20px; }
-
-        .panel {
+            padding: 12px 30px;
             background: var(--panel-bg);
-            border: 1px solid rgba(255, 51, 51, 0.1);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            margin-bottom: 20px;
-        }
-
-        .status-box {
+            border-bottom: 1px solid var(--panel-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 51, 51, 0.05);
+            height: 60px;
         }
 
-        .status-badge {
-            background: #250c0c;
-            padding: 6px 14px;
+        .brand { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .brand span { color: var(--accent-red); text-shadow: 0 0 10px var(--accent-glow); }
+
+        /* --- WALLET INFOS --- */
+        .account-info {
+            display: flex;
+            gap: 25px;
+            background: rgba(0,0,0,0.4);
+            padding: 6px 20px;
             border-radius: 6px;
-            font-weight: 800;
-            font-size: 14px;
-            color: var(--accent-red);
-            border: 1px solid rgba(255, 51, 51, 0.2);
+            border: 1px solid var(--panel-border);
         }
 
-        .status-badge.online {
-            color: var(--success);
-            border-color: var(--success);
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
-        }
+        .info-block { display: flex; flex-direction: column; }
+        .info-block span:first-child { font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+        .info-block span:last-child { font-size: 15px; font-weight: 800; color: var(--green-trade); }
 
-        .input-group { margin-bottom: 20px; }
-        label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 1px; }
-        
-        input[type="text"] {
+        /* --- MAIN INTERFACE --- */
+        .trading-container {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            height: calc(100vh - 60px);
             width: 100%;
-            background: #180808;
-            border: 1px solid rgba(255, 51, 51, 0.1);
-            padding: 12px;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 14px;
-            transition: border-color 0.2s;
-        }
-        input[type="text"]:focus { outline: none; border-color: var(--accent-red); }
-
-        .btn-container { display: flex; gap: 15px; }
-
-        button {
-            flex: 1;
-            padding: 14px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.2s;
-            border: none;
         }
 
-        .start-btn { background: var(--accent-red); color: white; box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3); }
-        .start-btn:hover { background: #ff1a1a; transform: translateY(-1px); }
-        .stop-btn { background: #250c0c; color: var(--text-muted); border: 1px solid rgba(255, 51, 51, 0.1); }
-        .stop-btn:hover { background: #381212; color: #fff; }
+        /* Chart Bereich (Erweitertes TradingView Widget) */
+        .chart-box {
+            background: #000;
+            height: 100%;
+            width: 100%;
+        }
 
-        /* Konsole / Live Logs */
-        .console {
-            background: #000000;
-            border: 1px solid #220808;
-            border-radius: 6px;
-            padding: 15px;
-            height: 200px;
+        /* Sidebar für Orders & Portfolio */
+        .sidebar {
+            background: var(--panel-bg);
+            border-left: 1px solid var(--panel-border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             overflow-y: auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            color: #ff9999;
         }
-        .console .log-entry { margin-bottom: 4px; }
+
+        .widget-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        /* Trade Controls (Buy/Sell) */
+        .trade-panel {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--panel-border);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 11px; color: var(--text-muted); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+        .input-group input {
+            width: 100%;
+            background: #060202;
+            border: 1px solid var(--panel-border);
+            padding: 10px;
+            color: #fff;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+        .input-group input:focus { outline: none; border-color: var(--accent-red); }
+
+        .action-btns { display: flex; gap: 10px; }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn-buy { background: var(--green-trade); box-shadow: 0 0 10px rgba(0, 255, 102, 0.15); }
+        .btn-sell { background: var(--red-trade); box-shadow: 0 0 10px rgba(255, 51, 51, 0.15); }
+        .btn:hover { opacity: 0.9; }
+
+        /* Portfolio Übersicht */
+        .inventory-panel {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--panel-border);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .inv-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 51, 51, 0.05);
+            font-size: 13px;
+        }
+        .inv-row:last-child { border: none; }
+        .inv-row span:last-child { font-weight: 700; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand">Load<span>Bot</span> Hoster</div>
+        <div class="brand">Load<span>Trading</span> Pro</div>
+        <div class="account-info">
+            <div class="info-block">
+                <span>Fake Guthaben</span>
+                <div id="balance-display">$25,000.00</div>
+            </div>
+            <div class="info-block">
+                <span>Aktive Trades</span>
+                <div id="trades-count" style="color: #fff;">0 offene Positionen</div>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <div class="panel">
-            <div class="status-box">
-                <h2>Bot Management</h2>
-                <div id="status" class="status-badge">Offline</div>
-            </div>
-
-            <div class="input-group">
-                <label>Discord Bot Token</label>
-                <input type="text" id="token-input" placeholder="MTA4ODk1MDU2M..." value="">
-            </div>
-
-            <div class="btn-container">
-                <button class="start-btn" onclick="startBot()">Bot Starten</button>
-                <button class="stop-btn" onclick="stopBot()">Stoppen</button>
-            </div>
+    <div class="trading-container">
+        
+        <div class="chart-box">
+            <div id="advanced-chart-widget" style="width: 100%; height: 100%;"></div>
         </div>
 
-        <div class="panel">
-            <label>Live Console Logs</label>
-            <div class="console" id="console-logs">
-                <div class="log-entry">[System] Bereit zum Starten. Wenn du deinen PC ausschaltest, geht der Bot offline!</div>
+        <div class="sidebar">
+            
+            <div class="trade-panel">
+                <div class="widget-title">Fake Order ausführen</div>
+                
+                <div class="input-group">
+                    <label>Einsatz in USD ($)</label>
+                    <input type="number" id="usd-amount" value="2500" min="10">
+                </div>
+
+                <div class="action-btns">
+                    <button class="btn btn-buy" onclick="tradeAction('LONG / KAUFEN')">Long</button>
+                    <button class="btn btn-sell" onclick="callShort('SHORT / VERKAUFEN')">Short</button>
+                </div>
             </div>
+
+            <div class="inventory-panel">
+                <div class="widget-title">Dein Log-Buch</div>
+                <div class="inv-row">
+                    <span>Hebel-Modus:</span>
+                    <span style="color: var(--accent-red);">1X (Standard)</span>
+                </div>
+                <div class="inv-row" style="flex-direction: column; gap: 5px;">
+                    <span style="color: var(--text-muted);">Letzte Aktion:</span>
+                    <span id="last-action-log" style="font-size: 11px; color: #aaa; font-family: monospace;">Keine Trades aufgegeben...</span>
+                </div>
+            </div>
+
         </div>
-    </main>
+    </div>
+
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+        new TradingView.widget({
+            "autosize": true,
+            "symbol": "FX:AUDCAD", /* Start-Symbol (Kann der User oben links im Chart frei wechseln!) */
+            "interval": "15",
+            "timezone": "Europe/Berlin",
+            "theme": "dark",
+            "style": "1",
+            "locale": "de",
+            "enable_publishing": false,
+            
+            /* DIESE ZWEI OPTIONEN AKTIVIEREN DIE CHEF-LEISTE (PINSEL, CO.) */
+            "hide_side_toolbar": false,     /* Macht die linke Zeichenleiste sichtbar */
+            "withdateranges": true,
+            "allow_symbol_change": true,    /* Erlaubt das Suchen JEDER Aktie (Apple, Tesla, Gold, etc.) */
+            "details": true,
+            "hotlist": true,
+            "calendar": true,
+            
+            "studies": [
+                "RSI@tv-basicstudies",      /* Fügt direkt beim Start standardmäßig den RSI Indikator hinzu */
+                "MASimple@tv-basicstudies"  /* Moving Average */
+            ],
+            "container_id": "advanced-chart-widget"
+        });
+    </script>
 
     <script>
-        // Verbindung zum lokalen Backend herstellen
-        function log(message) {
-            const consoleBox = document.getElementById("console-logs");
-            const entry = document.createElement("div");
-            entry.className = "log-entry";
-            entry.innerText = `[${new Date().toLocaleTimeString()}] ${message}`;
-            consoleBox.appendChild(entry);
-            consoleBox.scrollTop = consoleBox.scrollHeight;
+        let fakeBalance = 25000;
+        let activeTrades = 0;
+
+        function updateDisplay() {
+            document.getElementById("balance-display").innerText = `$${fakeBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            document.getElementById("trades-count").innerText = `${activeTrades} offene Positionen`;
         }
 
-        async function startBot() {
-            const token = document.getElementById("token-input").value;
-            if(!token) return alert("Bitte trage einen Token ein!");
+        function tradeAction(type) {
+            const money = parseFloat(document.getElementById("usd-amount").value);
+            if(isNaN(money) || money <= 0) return;
 
-            log("Starte Bot-Prozess auf deinem PC...");
-            
-            const response = await fetch('/api/start', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: token })
-            });
-            const data = await response.json();
-            
-            if(data.success) {
-                document.getElementById("status").innerText = "ONLINE";
-                document.getElementById("status").classList.add("online");
-                log("Bot ist jetzt ONLINE!");
-            } else {
-                log("Fehler beim Starten: " + data.error);
+            if(money > fakeBalance) {
+                alert("Nicht genug Guthaben!");
+                return;
             }
+
+            fakeBalance -= money;
+            activeTrades++;
+            document.getElementById("last-action-log").innerText = `SUCCESS: ${type} im Wert von $${money}`;
+            updateDisplay();
         }
 
-        async function stopBot() {
-            log("Stoppe Bot...");
-            const response = await fetch('/api/stop', { method: 'POST' });
-            const data = await response.json();
-            
-            document.getElementById("status").innerText = "OFFLINE";
-            document.getElementById("status").classList.remove("online");
-            log("Bot wurde beendet.");
+        function callShort() {
+            tradeAction('SHORT / VERKAUFEN');
         }
     </script>
 </body>
